@@ -1,7 +1,8 @@
 name: Publish package to GitHub Packages
 on:
-  branches:
-    - alvearie-develop
+  push:
+    branches:
+      - alvearie-develop
 jobs:
   publish:
     runs-on: ubuntu-latest
