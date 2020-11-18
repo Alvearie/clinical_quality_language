@@ -1,6 +1,7 @@
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
+    apply plugin: 'maven-publish'
 
     group = 'info.cqframework'
     version = '1.5.1-SNAPSHOT'
