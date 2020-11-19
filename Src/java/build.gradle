@@ -1,7 +1,6 @@
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
-    apply plugin: 'maven-publish'
 
     group = 'info.cqframework'
     version = '1.5.1-SNAPSHOT'
@@ -251,18 +250,31 @@ configure(subprojects.findAll {it.name in ['cql', 'model', 'elm', 'quick', 'cql-
     uploadArchives.dependsOn sourcesJar
 }
 
-publishing {
+configure(subprojects.findAll {it.name in ['cql', 'model', 'elm', 'quick', 'cql-to-elm', 'qdm', 'cql-formatter']}) {
+    apply plugin: 'maven-publish'
 
-  repositories {
-    maven {
-      name = "GitHubPackages"
-      url = "https://maven.pkg.github.com/Alvearie/clinical_quality_language"
-      credentials {
-        username = System.getenv("GITHUB_ACTOR")
-        password = System.getenv("GITHUB_TOKEN")
+    publishing {
+      repositories {
+        maven {
+          name = "GitHubPackages"
+          url = "https://maven.pkg.github.com/Alvearie/clinical_quality_language"
+          credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+          }
+        } 
       }
+      publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+      } 
     }
-  }
+    
+    
+    
+    publish.dependsOn javadocJar
+    publish.dependsOn sourcesJar
 }
 
 
